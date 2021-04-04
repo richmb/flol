@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml 
+    datamodel="ecmascript"
+    xmlns="http://www.w3.org/2005/07/scxml"
+    version="1.0">
+    <parallel id="System">
+        <parallel id="ControlStatus">
+            <state id="SupplyTemperatureStatus">
+
+                <state id="supplyStable">
+                    <onentry>
+                        <raise event="stable"/> 
+                    </onentry>
+                    <transition target="supplyToHot" event="supplyHot"/>
+                    <transition target="supplyToCold" event="supplyCold"/>
+                </state>
+                <state id="supplyToHot">
+                     <onentry>
+                        <send id="coolingTimeout" event="cool" delay="2s"/>
+                    </onentry>
+                    <onexit>
+                        <cancel sendid="coolingTimeout"/>
+                    </onexit>
+                    <transition target="supplyStable" event="supplyInRange"/>
+                </state>
+
+                <state id="supplyToCold">
+                    <onentry>
+                        <send id="heatingTimeout" event="heat" delay="2s"/>
+                    </onentry>
+                    <onexit>
+                        <cancel sendid="heatingTimeout"/>
+                    </onexit>
+                    <transition target="supplyStable" event="supplyInRange"/>
+                </state>
+            </state>
+            <state id="ReturnTemperatureStatus">
+                <state id="returnStable">
+                    <transition target="returnToHot" event="returnHot"/>
+                    <transition target="returnToCold" event="returnCold"/>
+                </state>
+
+                <state id="returnToHot">
+                    <transition target="returnStable" event="returnInRange"/>
+                </state>
+
+                <state id="returnToCold">
+                    <transition target="returnStable" event="returnInRange"/>
+                </state>
+            </state>
+
+            <state id="CompressorStatus">
+                <state id="compressorOff">
+                    <transition target="compressorOn" event="turnCompressorOn"/>
+                </state>
+                <state id="compressorOn">
+                    <transition target="compressorOff" event="turnCompressorOff"/>
+                </state>
+            </state>
+            <state id="HeaterStatus">
+                <state id="HeaterOff">
+                    <transition target="HeaterOn" event="turnHeaterOn"/>
+                </state>
+                <state id="HeaterOn">
+                    <transition target="HeaterOff" event="turnHeaterOff"/>
+                </state>
+            </state>
+        </parallel>
+        <state id="systemStatus">
+            <state id="system.stable">
+                <transition target="system.cooling" event="cool"/>
+                <transition target="system.heating" event="heat"/>
+            </state>
+            <state id="system.cooling">
+                <transition target="system.stable" event="stable"/>
+                <onentry>
+                    <raise event="turnCompressorOn"/>
+                </onentry>
+                <onexit>
+                    <raise event="turnCompressorOff"/>
+                </onexit>
+                
+            </state>
+            <state id="system.heating">
+                <transition target="system.stable" event="stable"/>
+                <onentry>
+                    <raise event="turnHeaterOn"/>
+                </onentry>
+                <onexit>
+                    <raise event="turnHeaterOff"/>
+                </onexit>
+            </state>
+        </state>
+    </parallel>
+
+</scxml>
+
+

@@ -1,0 +1,31 @@
+{
+  "name": "scxml-scion-sandbox",
+  "version": "1.0.0",
+  "description": "scxml scion test application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richmb/scxml-scion-sandbox.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/richmb/scxml-scion-sandbox/issues"
+  },
+  "homepage": "https://github.com/richmb/scxml-scion-sandbox#readme",
+  "dependencies": {
+    "@scion-scxml/cli": "^1.0.37",
+    "@scion-scxml/core": "^2.6.22",
+    "@scion-scxml/schviz": "^3.2.25",
+    "@scion-scxml/scxml": "^4.3.25",
+    "jquery": "^3.6.0",
+    "n": "^7.1.0"
+  },
+  "devDependencies": {
+    "@scion-scxml/eslint-plugin-scharpie": "^4.0.16",
+    "eslint": "^7.23.0"
+  }
+}
